@@ -1,0 +1,6 @@
+docker build . -t durkajr/learn_cars-api:1.2
+
+docker push docker.io/durkajr/learn_cars-api:1.2
+
+docker pull docker.io/durkajr/learn_cars-api:1.2
+

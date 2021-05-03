@@ -1,0 +1,47 @@
+kubectl create deployment cars-api --image=docker.io/durkajr/learn_cars-api:1.2
+
+kubectl logs -f cars-api-6577f7f948-465fh 
+
+kubectl expose deployment cars-api --port=80 --target-port=8080 --name cars-service --type=LoadBalancer
+
+kubectl create configmap cars-configmap \
+       --from-env-file=cars_configmap.properties
+
+kubectl edit deployment cars-api
+
+        env:
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: cars-configmap
+              key: db-host
+        - name: DB_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: cars-configmap
+              key: db-port
+        - name: DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: cars-configmap
+              key: db-name
+        - name: DB_USER
+          valueFrom:
+            configMapKeyRef:
+              name: cars-configmap
+              key: db-user
+        - name: DB_PASS
+          valueFrom:
+            configMapKeyRef:
+              name: cars-configmap
+              key: db-pass
+        - name: DB_SCHEMA
+          valueFrom:
+            configMapKeyRef:
+              name: cars-configmap
+              key: db-schema
+        - name: TABLE_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: cars-configmap
+              key: table_name
